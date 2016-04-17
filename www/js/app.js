@@ -25,13 +25,19 @@ angular.module('starter', ['ionic'])
         $ionicPopup.prompt({
             title: 'What is the next visit ?',
             inputType: 'text'
+            
         })
         .then(function(result) {
-            if(result !== "") {
-                if($scope.hasOwnProperty("todos") !== true) {
+            if(result != "") {
+                if($scope.hasOwnProperty("todos") != true) {
                     $scope.todos = [];
                 }
                 localDB.post({title: result});
+                //a retirer
+                $scope.todos.push(result);
+                //
+                
+                console.log(result+" saved");
             } else {
                 console.log("Action not completed");
             }
@@ -78,6 +84,10 @@ angular.module('starter', ['ionic'])
      
 }])
 /* Home */
+.controller("HomeCtrl", function($scope){
+    $scope.msg = "Home Ctrl";
+    console.log($scope.msg);
+})
 /* About*/
 .controller("AboutCtrl", function($scope){
     $scope.msg = "About Ctrl";
@@ -89,7 +99,7 @@ angular.module('starter', ['ionic'])
   $stateProvider.state("app",{
     url:"/home",
     templateUrl:"views/home.html",
-    controller:"appCtrl"
+    controller:"HomeCtrl"
   })
 
   $stateProvider.state("about",{
