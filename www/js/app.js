@@ -34,7 +34,7 @@ angular.module('starter', ['ionic'])
                 }
                 localDB.post({title: result});
                 //a retirer
-                $scope.todos.push(result);
+                $scope.todos.push({title: result});
                 //
                 
                 console.log(result+" saved");
@@ -65,6 +65,7 @@ angular.module('starter', ['ionic'])
         onChange: function(change) {
             if (!change.deleted) {
                 $rootScope.$apply(function() {
+                    console.log("apply");
                     localDB.get(change.id, function(err, doc) {
                         $rootScope.$apply(function() {
                             if (err) console.log(err);
