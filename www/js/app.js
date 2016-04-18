@@ -20,30 +20,53 @@ angular.module('starter', ['ionic'])
     console.log($scope.mmsg);
 
     $scope.todos = [];
- 
+    //bouton afficher suppression
+    $scope.data = {showDelete: false};
+
+    //creer un item
     $scope.create = function() {
         $ionicPopup.prompt({
             title: 'What is the next visit ?',
-            inputType: 'text'
-            
+            inputType: 'text'    
         })
         .then(function(result) {
             if(result != "") {
-                if($scope.hasOwnProperty("todos") != true) {
-                    $scope.todos = [];
-                }
-                localDB.post({title: result});
-                //a retirer
-                $scope.todos.push({title: result});
-                //
-                
+                localDB.post({title: result, check: false});
+                $scope.todos.push({title: result, check: false});                
                 console.log(result+" saved");
             } else {
                 console.log("Action not completed");
             }
         });
     }
- 
+    //supprimer item
+    $scope.remove = function(i){
+        $ionicPopup.confirm({
+            title: 'Are you sure ?',
+            buttons: [{text: 'No'},
+                      {text: '<b>Yes</b>',
+                       type: 'button-positive',
+                    }]
+        })
+        .then(function(){
+            $scope.todos.splice(i,1);
+        });
+    }
+    
+    //supprimer tout
+    $scope.removeAll = function(){
+        $ionicPopup.confirm({
+            title: 'Delete All ?',
+            buttons: [{text: 'No'},
+                      {text: '<b>Yes</b>',
+                       type: 'button-positive',
+                    }]
+        })
+        .then(function(){
+            $scope.todos = [];
+        });
+    }
+
     $scope.$on('add', function(event, todo) {
         $scope.todos.push(todo);
     });

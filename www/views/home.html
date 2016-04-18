@@ -1,9 +1,11 @@
 <ion-view view-title="home">
 	<ion-content>
 		<button class="right button button-icon icon ion-plus" ng-click="create()"></button>
-        <ion-list>
+		<button class="right button button-icon icon ion-minus" ng-click="removeAll()"></button>
+        <ion-list show-delete="data.showDelete" >
           <ion-item ng-repeat="todo in todos">
             {{todo.title}}
+            <ion-delete-button class="ion-minus-circled" ng-click="remove($index)"></ion-delete-item>
           </ion-item>
         </ion-list>
 	</ion-content>

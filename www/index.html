@@ -24,6 +24,7 @@
 
     <ion-pane ng-controller="appCtrl">
       <ion-header-bar class="bar-stable">
+        <button class="button button-icon icon ion-minus" ng-click="data.showDelete = !data.showDelete"></button>
         <h1 class="title">MA's todo list</h1>
         <button class="right button button-icon icon ion-plus" ng-click="create()"></button>
       </ion-header-bar>
