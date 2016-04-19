@@ -4,8 +4,15 @@
 		<button class="right button button-icon icon ion-minus" ng-click="removeAll()"></button>
         <ion-list show-delete="data.showDelete" >
           <ion-item ng-repeat="todo in todos">
+            
+            <label class="toggle toggle-small">
+              <input type="checkbox" ng-click="checked(todo.title,todo.check)" ng-model="todo.check">
+              <div class="track">
+                <div class="handle"></div>
+              </div>
+            </label>
             {{todo.title}}
-            <ion-delete-button class="ion-minus-circled" ng-click="remove($index)"></ion-delete-item>
+            <ion-delete-button class="ion-minus-circled" ng-click="remove(todo.title)"></ion-delete-item>
           </ion-item>
         </ion-list>
 	</ion-content>

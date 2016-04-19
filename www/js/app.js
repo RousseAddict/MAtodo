@@ -1,4 +1,4 @@
-var localDB = new PouchDB("todos");
+var db = new Firebase("https://matodo.firebaseio.com/");
 
 angular.module('starter', ['ionic'])
 
@@ -15,11 +15,19 @@ angular.module('starter', ['ionic'])
   });
 })
 
-.controller("appCtrl", function($scope, $ionicPopup, PouchDBListener) {
+.controller("appCtrl", function($scope, $ionicPopup) {
     $scope.mmsg = "Main Controller";
     console.log($scope.mmsg);
 
     $scope.todos = [];
+    //récupérer la liste des items.
+    db.on("value", function(snapshot) {
+        console.log(snapshot.val());
+        $scope.todos = snapshot.val();
+    }, function (errorObject) {
+        console.log("The read failed: " + errorObject.code);
+    });
+
     //bouton afficher suppression
     $scope.data = {showDelete: false};
 
@@ -31,15 +39,15 @@ angular.module('starter', ['ionic'])
         })
         .then(function(result) {
             if(result != "") {
-                localDB.post({title: result, check: false});
-                $scope.todos.push({title: result, check: false});                
+                db.child(result).set({title: result, check: false});
+                //$scope.todos.push({title: result, check: false});                
                 console.log(result+" saved");
             } else {
                 console.log("Action not completed");
             }
         });
     }
-    //supprimer item
+    //supprimer un item
     $scope.remove = function(i){
         $ionicPopup.confirm({
             title: 'Are you sure ?',
@@ -49,7 +57,8 @@ angular.module('starter', ['ionic'])
                     }]
         })
         .then(function(){
-            $scope.todos.splice(i,1);
+            //$scope.todos.splice(i,1);            
+            db.child(i).remove();
         });
     }
     
@@ -59,54 +68,24 @@ angular.module('starter', ['ionic'])
             title: 'Delete All ?',
             buttons: [{text: 'No'},
                       {text: '<b>Yes</b>',
-                       type: 'button-positive',
+                       type: 'button-positive'
                     }]
         })
         .then(function(){
-            $scope.todos = [];
+            //$scope.todos = []           
+            db.remove();
         });
     }
 
-    $scope.$on('add', function(event, todo) {
-        $scope.todos.push(todo);
-    });
- 
-    $scope.$on('delete', function(event, id) {
-        for(var i = 0; i < $scope.todos.length; i++) {
-            if($scope.todos[i]._id === id) {
-                $scope.todos.splice(i, 1);
-            }
-        }
-    });
- 
+    //update check
+    $scope.checked = function(i, bool){
+        
+        db.child(i+"/check").set(bool);
+        console.log(i+" checked has changed to "+bool);
+    }
 })
 
-.factory('PouchDBListener', ['$rootScope', function($rootScope) {
-    console.log("factory ok");
-    localDB.changes({
-        continuous: true,
-        onChange: function(change) {
-            if (!change.deleted) {
-                $rootScope.$apply(function() {
-                    console.log("apply");
-                    localDB.get(change.id, function(err, doc) {
-                        $rootScope.$apply(function() {
-                            if (err) console.log(err);
-                            $rootScope.$broadcast('add', doc);
-                        })
-                    });
-                })
-            } else {
-                $rootScope.$apply(function() {
-                    $rootScope.$broadcast('delete', change.id);
-                });
-            }
-        }
-    });
- 
-    return true;
-     
-}])
+
 /* Home */
 .controller("HomeCtrl", function($scope){
     $scope.msg = "Home Ctrl";
