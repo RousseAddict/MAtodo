@@ -1,19 +1,21 @@
-<ion-view view-title="home">
+<ion-view hide-back-button="true">
 	<ion-content>
-		<button class="right button button-icon icon ion-plus" ng-click="create()"></button>
-		<button class="right button button-icon icon ion-minus" ng-click="removeAll()"></button>
-        <ion-list show-delete="data.showDelete" >
-          <ion-item ng-repeat="todo in todos">
-            
-            <label class="toggle toggle-small">
-              <input type="checkbox" ng-click="checked(todo.title,todo.check)" ng-model="todo.check">
-              <div class="track">
-                <div class="handle"></div>
-              </div>
-            </label>
-            {{todo.title}}
-            <ion-delete-button class="ion-minus-circled" ng-click="remove(todo.title)"></ion-delete-item>
-          </ion-item>
-        </ion-list>
+		  <button class="button button-small button-assertive" ng-click="data.showDelete = !data.showDelete">Delete !</button>
+      <button class="button button-small button-positive" ng-click="create()">add !</button>
+      <ion-list show-delete="data.showDelete" >
+        <ion-item ng-repeat="todo in todos">  
+          <label class="toggle toggle-small">
+            <input type="checkbox" ng-click="checked(todo.title,todo.check)" ng-model="todo.check">
+            <div class="track">
+              <div class="handle"></div>
+            </div>
+          </label>
+          {{todo.title}}
+          <ion-delete-button class="ion-minus-circled" ng-click="remove(todo.title)"></ion-delete-item>
+          <ion-option-button class="button-assertive" ng-click="info(todo)">
+           Infos
+          </ion-option-button>
+        </ion-item>
+      </ion-list>
 	</ion-content>
 </ion-view>

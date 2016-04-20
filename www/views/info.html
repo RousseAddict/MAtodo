@@ -1,0 +1,29 @@
+<ion-view view-title="info">
+	<br />
+
+	<div class="list card">
+		<div class="item item-thumbnail-left">
+			<img src="img/ra.png">
+			<button class="button button-icon icon ion-star button-right" ng-click="addFavorite(infos.title)"></button>
+			<h2 class="center"> Title : {{infos.title}}</h2>
+			<p>Visited : {{infos.check}}</p>
+
+		</div>
+		<div class="item item-button-right">
+			<p><i class="icon ion-location"></i>{{infos.location}}</p>
+			<button class="button button-positive" ng-click="edit(infos.title,'location')">
+      			Edit
+    		</button>
+		</div>
+		<div class="item">
+			<p><b>Type :</b>{{}}</p>
+			<p><b>Status :</b>{{}}</p>
+		</div>
+		<div class="item item-button-right">
+			<p><b>Commentaire :</b> {{infos.comment}}</p>
+			<button class="button button-positive" ng-click="edit(infos.title,'comment')">
+      			Edit
+    		</button>
+		</div>
+	</div>
+</ion-view>

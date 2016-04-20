@@ -15,7 +15,7 @@ angular.module('starter', ['ionic'])
   });
 })
 
-.controller("appCtrl", function($scope, $ionicPopup) {
+.controller("appCtrl", function($scope, $ionicPopup, $location) {
     $scope.mmsg = "Main Controller";
     console.log($scope.mmsg);
 
@@ -27,9 +27,6 @@ angular.module('starter', ['ionic'])
     }, function (errorObject) {
         console.log("The read failed: " + errorObject.code);
     });
-
-    //bouton afficher suppression
-    $scope.data = {showDelete: false};
 
     //creer un item
     $scope.create = function() {
@@ -61,27 +58,11 @@ angular.module('starter', ['ionic'])
             db.child(i).remove();
         });
     }
-    
-    //supprimer tout
-    $scope.removeAll = function(){
-        $ionicPopup.confirm({
-            title: 'Delete All ?',
-            buttons: [{text: 'No'},
-                      {text: '<b>Yes</b>',
-                       type: 'button-positive'
-                    }]
-        })
-        .then(function(){
-            //$scope.todos = []           
-            db.remove();
-        });
-    }
 
-    //update check
-    $scope.checked = function(i, bool){
-        
-        db.child(i+"/check").set(bool);
-        console.log(i+" checked has changed to "+bool);
+    //go to info page
+    $scope.info = function(i){
+        $location.path("/info");
+        $scope.infos = i;
     }
 })
 
@@ -90,6 +71,41 @@ angular.module('starter', ['ionic'])
 .controller("HomeCtrl", function($scope){
     $scope.msg = "Home Ctrl";
     console.log($scope.msg);
+
+    //bouton afficher suppression
+    $scope.data = {showDelete: false};
+
+    //update check
+    $scope.checked = function(i, bool){
+        db.child(i+"/check").set(bool);
+        console.log(i+" checked has changed to "+bool);
+    }
+})
+/* Info*/
+.controller("InfoCtrl", function($scope, $ionicPopup){
+    $scope.msg = "Info Ctrl";
+    console.log($scope.msg);
+
+    //add favorite
+    $scope.addFavorite = function(i){
+        db.child(i+"/favorite").set(true);
+        $ionicPopup.alert({
+            title: 'Favorited',
+            template: 'This place has been added to favorite !'
+        });
+    }
+    //edit informations
+    $scope.edit = function(i,j){
+        $ionicPopup.prompt({
+            title: 'Edit',
+            inputType: 'text' 
+        })
+        .then(function(result) {
+            if(result != "") {
+                db.child(i+"/"+j).set(result);
+            }
+        });
+    }
 })
 /* About*/
 .controller("AboutCtrl", function($scope){
@@ -103,6 +119,12 @@ angular.module('starter', ['ionic'])
     url:"/home",
     templateUrl:"views/home.html",
     controller:"HomeCtrl"
+  })
+
+  $stateProvider.state("info",{
+    url:"/info",
+    templateUrl:"views/info.html",
+    controller:"InfoCtrl"
   })
 
   $stateProvider.state("about",{
