@@ -19,7 +19,7 @@ angular.module('starter', ['ionic'])
     $scope.mmsg = "Main Controller";
     console.log($scope.mmsg);
 
-    $scope.todos = [];
+    $scope.todos = db;
     //récupérer la liste des items.
     db.on("value", function(snapshot) {
         console.log(snapshot.val());
@@ -107,6 +107,12 @@ angular.module('starter', ['ionic'])
         });
     }
 })
+/* Favorites*/
+.controller("FavoritesCtrl", function($scope){
+    $scope.msg = "Favorites Ctrl";
+    console.log($scope.msg);
+})
+
 /* About*/
 .controller("AboutCtrl", function($scope){
     $scope.msg = "About Ctrl";
@@ -125,6 +131,12 @@ angular.module('starter', ['ionic'])
     url:"/info",
     templateUrl:"views/info.html",
     controller:"InfoCtrl"
+  })
+
+  $stateProvider.state("favorites",{
+    url:"/favorites",
+    templateUrl:"views/favorites.html",
+    controller:"FavoritesCtrl"
   })
 
   $stateProvider.state("about",{

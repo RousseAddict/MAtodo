@@ -20,20 +20,34 @@
     <!-- your app's js -->
     <script src="js/app.js"></script>
   </head>
-  <body ng-app="starter">
+  <body ng-app="starter" ng-controller="appCtrl">
 
-    <ion-pane ng-controller="appCtrl">
-      <ion-nav-bar class="bar-stable">
-        <ion-nav-back-button></ion-nav-back-button>
-        <ion-nav-title>MA's ideas</ion-nav-title>
-        <ion-nav-buttons side="primary">
-          <button class="button button-icon icon ion-plus" ng-click="create()"></button>
-        </ion-nav-buttons>
-        <ion-nav-buttons side="secondary">
-          <button class="button button-icon icon ion-navicon-round" ng-click="toggleRight()"></button>
-        </ion-nav-buttons> 
-      </ion-nav-bar>
-      <ion-nav-view></ion-nav-view/>
-    </ion-pane>
+    <ion-side-menus>
+      <ion-side-menu-content drag-content="false">
+        <ion-nav-bar class="bar-stable">
+          <ion-nav-back-button></ion-nav-back-button>
+          <ion-nav-title>MA's ideas</ion-nav-title>
+          <ion-nav-buttons side="primary">
+            <button class="button button-icon icon ion-plus" ng-click="create()"></button>
+          </ion-nav-buttons>
+          <ion-nav-buttons side="secondary">
+            <button class="button button-icon icon ion-navicon-round" menu-toggle="right"></button>
+          </ion-nav-buttons> 
+        </ion-nav-bar>
+        <ion-nav-view></ion-nav-view/>
+      </ion-side-menu-content>
+      <ion-side-menu side="right">
+        <div class="list">
+          <a class="item item-icon-left" ng-href="#/home">
+            <i class="icon ion-home"></i>
+              Home
+          </a>
+          <a class="item item-icon-left" ng-href="#/favorites">
+            <i class="icon ion-star"></i>
+              Favorites
+          </a>
+        </div>
+      </ion-side-menu>
+    </ion-side-menus>
   </body>
 </html>
