@@ -19,14 +19,22 @@ angular.module('starter', ['ionic'])
     $scope.mmsg = "Main Controller";
     console.log($scope.mmsg);
 
-    $scope.todos = db;
-    //récupérer la liste des items.
+    
+    //récupérer la liste des items & fav.
     db.on("value", function(snapshot) {
         console.log(snapshot.val());
         $scope.todos = snapshot.val();
     }, function (errorObject) {
         console.log("The read failed: " + errorObject.code);
     });
+
+    db.orderByChild("favorite").equalTo(true).on("value", function(snapshot) {
+        console.log(snapshot.val());
+        $scope.fav = snapshot.val();
+    }, function (errorObject) {
+        console.log("The read failed: " + errorObject.code);
+    });
+
 
     //creer un item
     $scope.create = function() {
@@ -87,13 +95,11 @@ angular.module('starter', ['ionic'])
     console.log($scope.msg);
 
     //add favorite
-    $scope.addFavorite = function(i){
+    $scope.favorited = function(i, bool){
         db.child(i+"/favorite").set(true);
-        $ionicPopup.alert({
-            title: 'Favorited',
-            template: 'This place has been added to favorite !'
-        });
+        console.log(i+" favorite has changed to "+bool);
     }
+    
     //edit informations
     $scope.edit = function(i,j){
         $ionicPopup.prompt({
@@ -108,9 +114,12 @@ angular.module('starter', ['ionic'])
     }
 })
 /* Favorites*/
-.controller("FavoritesCtrl", function($scope){
+.controller("FavoritesCtrl", function($scope,$filter){
     $scope.msg = "Favorites Ctrl";
     console.log($scope.msg);
+    console.log($scope.fav);
+    
+
 })
 
 /* About*/

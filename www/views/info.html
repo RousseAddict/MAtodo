@@ -1,10 +1,10 @@
-<ion-view view-title="info">
-	<br />
+<ion-view view-title="{{infos.title}}">
+  <ion-content>
 
 	<div class="list card">
 		<div class="item item-thumbnail-left">
 			<img src="img/ra.png">
-			<button class="button button-icon icon ion-star button-right" ng-click="addFavorite(infos.title)"></button>
+			<i class="button button-icon icon ion-star button-right" ng-show="infos.favorite"></i>
 			<h2 class="center"> Title : {{infos.title}}</h2>
 			<p>Visited : {{infos.check}}</p>
 
@@ -25,5 +25,15 @@
       			Edit
     		</button>
 		</div>
+		<div class="item item-toggle">
+         Favorited
+         <label class="toggle toggle-energized">
+             <input type="checkbox" ng-model="infos.favorite" ng-click="favorited(infos.title,infos.favorite)">
+             <div class="track">
+                 <div class="handle"></div>
+             </div>
+         </label>
+    	</div>
 	</div>
+  </ion-content>
 </ion-view>
