@@ -1,6 +1,4 @@
-
-
-angular.module('starter', ['ionic'])
+angular.module('starter', ['ionic', 'firebase'])
 
 .run(function($ionicPlatform) {
   console.log("run ok");
@@ -15,27 +13,16 @@ angular.module('starter', ['ionic'])
   });
 })
 
-.controller("appCtrl", function($scope, $ionicPopup, $location) {
+.factory("Items", function($firebaseArray) {
+    var itemsRef = new Firebase("https://matodo.firebaseio.com/");
+    return $firebaseArray(itemsRef);
+})
+
+.controller("appCtrl", function($scope, $ionicPopup, $location, Items) {
     $scope.mmsg = "Main Controller";
     console.log($scope.mmsg);
-    $scope.db = new Firebase("https://matodo.firebaseio.com/");
+    $scope.todos = Items;
     
-    //récupérer la liste des items & fav.
-    $scope.db.on("value", function(snapshot) {
-        console.log(snapshot.val());
-        $scope.todos = snapshot.val();
-    }, function (errorObject) {
-        console.log("The read failed: " + errorObject.code);
-    });
-
-    $scope.db.orderByChild("favorite").equalTo(true).on("value", function(snapshot) {
-        console.log(snapshot.val());
-        $scope.fav = snapshot.val();
-    }, function (errorObject) {
-        console.log("The read failed: " + errorObject.code);
-    });
-
-
     //creer un item
     $scope.create = function() {
         $ionicPopup.prompt({
@@ -44,8 +31,7 @@ angular.module('starter', ['ionic'])
         })
         .then(function(result) {
             if(result != "") {
-                $scope.db.child(result).set({title: result, check: false});
-                //$scope.todos.push({title: result, check: false});                
+                $scope.todos.$add({title: result, check: false});                
                 console.log(result+" saved");
             } else {
                 console.log("Action not completed");
@@ -62,8 +48,8 @@ angular.module('starter', ['ionic'])
                     }]
         })
         .then(function(){
-            //$scope.todos.splice(i,1);            
-            $scope.db.child(i).remove();
+            $scope.todos.$remove(i);          
+            //$scope.db.child(i).remove();
         });
     }
 
@@ -85,7 +71,8 @@ angular.module('starter', ['ionic'])
 
     //update check
     $scope.checked = function(i, bool){
-        $scope.db.child(i+"/check").set(bool);
+        //$scope.db.child(i+"/check").set(bool);
+        $scope.todos.$save(i);
         console.log(i+" checked has changed to "+bool);
     }
 })
@@ -95,31 +82,54 @@ angular.module('starter', ['ionic'])
     console.log($scope.msg);
 
     //add favorite
-    $scope.favorited = function(i, bool){
-        $scope.db.child(i+"/favorite").set(bool);
-        console.log(i+" favorite has changed to "+bool);
+    $scope.favorited = function(){
+        $scope.todos.$save($scope.infos);
+        console.log($scope.infos.title+" favorite has changed to "+$scope.infos.favorite);
     }
     
-    //edit informations
-    $scope.edit = function(i,j){
+    //edit location
+    $scope.editL = function(){
         $ionicPopup.prompt({
             title: 'Edit',
-            inputType: 'text' 
+            template: '<input type="text" ng-model="infos.location">',
+            scope: $scope,
+            buttons: [
+            {
+                text: 'Cancel'
+            },{
+                text: '<b>Save</b>',
+                type: 'button-positive',
+                onTap: function(e){
+                    $scope.todos.$save($scope.infos);
+                }
+            }]
         })
-        .then(function(result) {
-            if(result != "") {
-                $scope.db.child(i+"/"+j).set(result);
-            }
-        });
+    }
+
+    //edit comment
+    $scope.editC = function(){
+        $ionicPopup.prompt({
+            title: 'Edit',
+            template: '<input type="text" ng-model="infos.comment">',
+            scope: $scope,
+            buttons: [
+            {
+                text: 'Cancel'
+            },{
+                text: '<b>Save</b>',
+                type: 'button-positive',
+                onTap: function(e){
+                    $scope.todos.$save($scope.infos);
+                }
+            }]
+        })
     }
 })
 /* Favorites*/
-.controller("FavoritesCtrl", function($scope,$filter){
+.controller("FavoritesCtrl", function($scope, $filter){
     $scope.msg = "Favorites Ctrl";
     console.log($scope.msg);
-    console.log($scope.fav);
-    
-
+    $scope.fav = $filter('filter')($scope.todos, {favorite: true});
 })
 
 /* About*/
