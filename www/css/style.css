@@ -1,1 +1,21 @@
 /* Empty. Add your own CSS if you like */
+.mynavbar{
+  height: 54px !important;
+}
+
+.mynavbar .title {
+   line-height: 54px;
+   font-size: large;
+   font-weight: bold;
+}
+
+.center-large{
+     text-align:center;
+     font-size: large;
+}
+
+.dark {
+  background-color: #3f4041 !important;
+  color: #ffffff !important;
+}
+/*home*/

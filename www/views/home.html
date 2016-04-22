@@ -1,8 +1,10 @@
-<ion-view hide-back-button="true">
+<ion-view view-title="MA ideas" hide-back-button="true">
 	<ion-content>
-		  <button class="button button-small button-assertive" ng-click="data.showDelete = !data.showDelete">Delete !</button>
-      <button class="button button-small button-positive" ng-click="create()">add !</button>
-      <ion-list show-delete="data.showDelete" >
+      <div class="button-bar">
+        <a class="button button-clear button-assertive" ng-click="data.showDelete = !data.showDelete">Delete</a>
+        <a class="button button-clear button-balanced" ng-click="create()">Add</a>
+      </div>
+      <ion-list show-delete="data.showDelete">
         <ion-item ng-repeat="todo in todos">  
           <label class="toggle toggle-small">
             <input type="checkbox" ng-click="checked(todo.title,todo.check)" ng-model="todo.check">
