@@ -10,11 +10,20 @@ angular.module('starter', ['ionic', 'firebase'])
     if(window.StatusBar) {
       StatusBar.styleDefault();
     }
+    document.addEventListener("resume", function () {
+        Firebase.goOnline();
+    },false);  
+        
+    document.addEventListener("pause", function () {
+        Firebase.goOffline();
+    },false);
   });
 })
 
 .factory("Items", function($firebaseArray) {
     var itemsRef = new Firebase("https://matodo.firebaseio.com/");
+    itemsRef.onDisconnect().update({ endedAt: Firebase.ServerValue.TIMESTAMP });
+    itemsRef.update({ startedAt: Firebase.ServerValue.TIMESTAMP });
     return $firebaseArray(itemsRef);
 })
 
