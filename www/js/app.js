@@ -22,12 +22,10 @@ angular.module('starter', ['ionic', 'firebase'])
 
 .factory("Items", function($firebaseArray) {
     var itemsRef = new Firebase("https://matodo.firebaseio.com/");
-    itemsRef.onDisconnect().update({ endedAt: Firebase.ServerValue.TIMESTAMP });
-    itemsRef.update({ startedAt: Firebase.ServerValue.TIMESTAMP });
     return $firebaseArray(itemsRef);
 })
 
-.controller("appCtrl", function($scope, $ionicPopup, $location, Items) {
+.controller("appCtrl", function($scope, $ionicPopup, $location, Items, $ionicListDelegate) {
     $scope.mmsg = "Main Controller";
     console.log($scope.mmsg);
     $scope.todos = Items;
@@ -66,6 +64,7 @@ angular.module('starter', ['ionic', 'firebase'])
     $scope.info = function(i){
         $location.path("/info");
         $scope.infos = i;
+        $ionicListDelegate.closeOptionButtons();
     }
 })
 
