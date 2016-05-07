@@ -1,4 +1,4 @@
-angular.module('starter', ['ionic', 'firebase'])
+angular.module('starter', ['ionic', 'firebase', 'ngCordova'])
 
 .run(function($ionicPlatform) {
   console.log("run ok");
@@ -131,6 +131,30 @@ angular.module('starter', ['ionic', 'firebase'])
                 }
             }]
         })
+    }
+
+    //upload picture
+    $scope.upload = function() {
+        var options = {
+            quality : 75,
+            destinationType : Camera.DestinationType.DATA_URL,
+            sourceType : Camera.PictureSourceType.CAMERA,
+            allowEdit : true,
+            encodingType: Camera.EncodingType.JPEG,
+            popoverOptions: CameraPopoverOptions,
+            targetWidth: 500,
+            targetHeight: 500,
+            saveToPhotoAlbum: false
+        };
+        $cordovaCamera.getPicture(options).then(function(imageData) {
+            $scope.infos.image = imageData;
+            $scope.todos.$save($scope.infos).then(function(){
+            //syncArray.$add({image: imageData}).then(function() {
+                alert("Image has been uploaded");
+            });
+        }, function(error) {
+            console.error(error);
+        });
     }
 })
 /* Favorites*/

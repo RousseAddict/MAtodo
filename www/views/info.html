@@ -1,55 +1,68 @@
 <ion-view view-title="{{infos.title}}">
   <ion-content>
 	<div class="list card">
+    <!--Header Card -->
 		<div class="item item-thumbnail-left">
 			<img src="img/ra.png">
 			<i class="button button-icon icon ion-star button-right" ng-show="infos.favorite"></i>
 			<h2 class="center"> Title : {{infos.title}}</h2>
 			<p>Visited : {{infos.check}}</p>
-
 		</div>
+    <!--Localisation -->
 		<div class="item item-button-right">
 			<p><i class="icon ion-location"></i>{{infos.location}}</p>
 			<button class="button button-positive" ng-click="editL()">
-      			Edit
-    		</button>
+      	Edit
+    	</button>
 		</div>
+    <!--Type-->
 		<div class="item item-select">
 			<p><b>Type :</b></p>
 			<select ng-model="infos.type">
-      			<option selected></option>
-      			<option>Rooftop</option>
-      			<option>Factory</option>
-      			<option>Abandonned House</option>
-      			<option>Castle</option>
-    		</select>
+      	<option selected></option>
+      	<option>Rooftop</option>
+      	<option>Factory</option>
+      	<option>Abandonned House</option>
+      	<option>Castle</option>
+    	</select>
 		</div>
+    <!--Site Condition-->
 		<div class="item item-select">
 			<p><b>Site Conditions :</b></p>
-			<select ng-model="infos.siteconditions">
-      			<option selected></option>
-      			<option>Destroyed</option>
-      			<option>In Ruins</option>
-      			<option>Debilitated</option>
-      			<option>Unchanged</option>
-      			<option>In Reconstruction</option>
-    		</select>
+		  <select ng-model="infos.siteconditions">
+    		<option selected></option>
+    		<option>Destroyed</option>
+    		<option>In Ruins</option>
+    		<option>Debilitated</option>
+    		<option>Unchanged</option>
+    		<option>In Reconstruction</option>
+    	</select>
 		</div>
+    <!--Comment-->
 		<div class="item item-button-right">
-			<p><b>Commentaire :</b> {{infos.comment}}</p>
+			<p><b>Comment :</b> {{infos.comment}}</p>
 			<button class="button button-positive" ng-click="editC()">
-      			Edit
-    		</button>
+      	Edit
+      </button>
 		</div>
+    <!--Favorite-->
 		<div class="item item-toggle">
-         Favorited
-         <label class="toggle toggle-energized">
-             <input type="checkbox" ng-model="infos.favorite" ng-click="favorited()">
-             <div class="track">
-                 <div class="handle"></div>
-             </div>
-         </label>
-    	</div>
+      Favorited
+      <label class="toggle toggle-energized">
+          <input type="checkbox" ng-model="infos.favorite" ng-click="favorited()">
+          <div class="track">
+              <div class="handle"></div>
+          </div>
+      </label>
+    </div>
+    <!--Gallery-->
+    <div class="item item-body">
+      <button class="item item-icon-left balanced" ng-click="upload()">
+        <i class="icon ion-upload"></i>
+        Upload a Picture
+      </button>
+      <img class="full-image" ng-src="data:image/jpeg;base64, {{infos.image}}">
+    </div>
 	</div>
   </ion-content>
 </ion-view>
