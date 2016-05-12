@@ -24,15 +24,15 @@
   </head>
   <body ng-app="starter" ng-controller="appCtrl">
 
-    <ion-side-menus>
+    <ion-side-menus enable-menu-with-back-views="true">
       <ion-side-menu-content drag-content="false">
         <ion-nav-bar class="bar-balanced mynavbar">
           <ion-nav-back-button></ion-nav-back-button>
           <ion-nav-title>MA's ideas</ion-nav-title>
-          <ion-nav-buttons side="primary">
+          <ion-nav-buttons side="left">
             <button class="button button-icon icon ion-plus" ng-click="create()"></button>
           </ion-nav-buttons>
-          <ion-nav-buttons side="secondary">
+          <ion-nav-buttons side="right">
             <button class="button button-icon icon ion-navicon-round" menu-toggle="right"></button>
           </ion-nav-buttons> 
         </ion-nav-bar>

@@ -20,6 +20,12 @@ angular.module('starter', ['ionic', 'firebase'])
   });
 })
 
+.config(function($ionicConfigProvider) {
+    //$ionicConfigProvider.tabs.position('bottom');
+    $ionicConfigProvider.backButton.text('Back').icon('ion-chevron-left');
+    $ionicConfigProvider.navBar.alignTitle('center');
+}) 
+
 .factory("Items", function($firebaseArray) {
     var itemsRef = new Firebase("https://matodo.firebaseio.com/");
     return $firebaseArray(itemsRef);
@@ -144,6 +150,10 @@ angular.module('starter', ['ionic', 'firebase'])
         fr.readAsDataURL(filename);
     }
     document.getElementById("file-upload").addEventListener('change', saveimage, false);
+    $scope.deleteImg = function(){
+        $scope.infos.image = "";
+        $scope.todos.$save($scope.infos);
+    }
 
 })
 /* Favorites*/

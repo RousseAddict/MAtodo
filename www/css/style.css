@@ -4,8 +4,8 @@
 }
 
 .mynavbar .title {
-   line-height: 54px;
-   font-size: large;
+   line-height: 54px !important;
+   font-size: x-large !important;
    font-weight: bold;
 }
 
