@@ -2,7 +2,7 @@
   <ion-content>
 	<div class="list card">
 		<div class="item item-thumbnail-left">
-			<img src="img/ra.png">
+			<img ng-src="{{infos.image}}">
 			<i class="button button-icon icon ion-star button-right" ng-show="infos.favorite"></i>
 			<h2 class="center"> Title : {{infos.title}}</h2>
 			<p>Visited : {{infos.check}}</p>
@@ -18,6 +18,7 @@
 			<p><b>Type :</b></p>
 			<select ng-model="infos.type">
       			<option selected></option>
+            <option>Town</option>
       			<option>Rooftop</option>
       			<option>Factory</option>
       			<option>Abandonned House</option>
@@ -50,6 +51,16 @@
              </div>
          </label>
     	</div>
-	</div>
+      <div class="item item-icon-left">
+        <i class="icon ion-image"></i>
+        <input type="file" accept="image/*" capture="camera" id="file-upload">
+      </div>
+      <div class="item item-image">
+        <img ng-src="{{infos.image}}">
+      </div>
+      <div class="item item-image" sg-show="infos.image != ''">
+        <button class="button button-assertive button-small">Delete</button>
+      </div>
+	  </div>
   </ion-content>
 </ion-view>

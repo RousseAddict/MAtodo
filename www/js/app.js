@@ -132,6 +132,19 @@ angular.module('starter', ['ionic', 'firebase'])
             }]
         })
     }
+
+    //upload an image
+    function saveimage(e1) {
+        var filename = e1.target.files[0];
+        var fr = new FileReader();
+        fr.onload = function (res) {
+            $scope.infos.image = res.target.result;
+            $scope.todos.$save($scope.infos);
+        };
+        fr.readAsDataURL(filename);
+    }
+    document.getElementById("file-upload").addEventListener('change', saveimage, false);
+
 })
 /* Favorites*/
 .controller("FavoritesCtrl", function($scope, $filter){
