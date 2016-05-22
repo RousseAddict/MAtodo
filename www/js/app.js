@@ -90,6 +90,7 @@ angular.module('starter', ['ionic', 'firebase'])
         console.log(i+" checked has changed to "+bool);
     }
 })
+
 /* Info*/
 .controller("InfoCtrl", function($scope, $ionicPopup){
     $scope.msg = "Info Ctrl";
@@ -163,10 +164,22 @@ angular.module('starter', ['ionic', 'firebase'])
     $scope.fav = $filter('filter')($scope.todos, {favorite: true});
 })
 
-/* About*/
-.controller("AboutCtrl", function($scope){
-    $scope.msg = "About Ctrl";
+/* Notes*/
+.controller("NotesCtrl", function($scope, $firebaseObject){
+    $scope.msg = "Notes Ctrl";
     console.log($scope.msg);
+    $scope.note;
+
+    var noteRef = new Firebase("https://matodo.firebaseio.com/Note");
+    var obj = new $firebaseObject(noteRef)
+    obj.$loaded().then(function() {
+        console.log(obj.$value); 
+    });
+
+    $scope.saveNote = function(val){
+        obj.$value = val
+        obj.$save();
+    }
 })
 
 //routes
@@ -189,10 +202,10 @@ angular.module('starter', ['ionic', 'firebase'])
     controller:"FavoritesCtrl"
   })
 
-  $stateProvider.state("about",{
-    url:"/about",
-    templateUrl:"views/about.html",
-    controller:"AboutCtrl"
+  $stateProvider.state("notes",{
+    url:"/notes",
+    templateUrl:"views/notes.html",
+    controller:"NotesCtrl"
   })
 
   $urlRouterProvider.otherwise('/home')

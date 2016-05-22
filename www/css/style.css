@@ -19,3 +19,15 @@
   color: #ffffff !important;
 }
 /*home*/
+
+
+/*note*/
+#jfnote{
+	height: 200px !important;
+}
+
+textarea {
+	width: 100%;
+	height: 75%;
+
+}
