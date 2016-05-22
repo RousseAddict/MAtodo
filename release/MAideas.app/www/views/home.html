@@ -1,0 +1,23 @@
+<ion-view view-title="MA ideas" hide-back-button="true">
+	<ion-content>
+      <div class="button-bar">
+        <a class="button button-clear button-assertive button-large" ng-click="data.showDelete = !data.showDelete">Delete</a>
+        <a class="button button-clear button-balanced button-large" ng-click="create()">Add</a>
+      </div>
+      <ion-list show-delete="data.showDelete">
+        <ion-item ng-repeat="todo in todos">  
+          <label class="toggle toggle-small">
+            <input type="checkbox" ng-click="checked(todo,todo.check)" ng-model="todo.check">
+            <div class="track">
+              <div class="handle"></div>
+            </div>
+          </label>
+          {{todo.title}}
+          <ion-delete-button class="ion-minus-circled" ng-click="remove(todo)"></ion-delete-item>
+          <ion-option-button class="button-assertive" ng-click="info(todo)">
+           Infos
+          </ion-option-button>
+        </ion-item>
+      </ion-list>
+	</ion-content>
+</ion-view>
