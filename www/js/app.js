@@ -173,7 +173,8 @@ angular.module('starter', ['ionic', 'firebase'])
     var noteRef = new Firebase("https://matodo.firebaseio.com/Note");
     var obj = new $firebaseObject(noteRef)
     obj.$loaded().then(function() {
-        console.log(obj.$value); 
+        console.log(obj.$value);
+        $scope.note = obj.$value; 
     });
 
     $scope.saveNote = function(val){
